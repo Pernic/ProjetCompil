@@ -183,12 +183,8 @@ bool checkScope(TreeP tree, VarDeclP lvar) {
 VarDeclP addToScope(VarDeclP list, VarDeclP nouv) {
   if(list == NIL(VarDeclP))
     return nouv;
-  VarDeclP res = list;
-  while(res->next != NIL(VarDeclP)){
-    res = res->next;
-  }
-  res->next = &nouv;
-  return list;
+  nouv->next = list;
+  return nouv;
 }
 
 
@@ -229,23 +225,14 @@ VarDeclP declVar(char *name, TreeP tree, VarDeclP currentScope) {
 int evalVar(TreeP tree, VarDeclP decls) {
   
   int resultat = 0 ;
-  if (tree->nbChildren == 0){
-    if(tree->op == "CST")
-      return (int) tree->u.val;
-    if(tree->op == "ID" || tree->op == "STR"){
-      char *name = (char*) tree->u.str;
-      VarDeclP res = decls;
-      while(res->next != NIL(VarDeclP)){
-	if(!strcmp(res->name,name))
-	  return res->val;
-        res = res->next;
-      }
-    }
-  }else{
-    short i = 0; 
-    for(i= 0;i < (tree->nbChildren) ;i++)
-      resultat = resultat + evalVar((TreeP) tree->u.children[i],decls);
-  }	
+  
+  char *name = (char*) tree->u.str;
+  VarDeclP res = decls;
+  while(res->next != NIL(VarDeclP)){
+    if(!strcmp(res->name,name))
+      return res->val;
+    res = res->next;
+  }
   
   return resultat;
 }
@@ -291,6 +278,8 @@ int eval(TreeP tree, VarDeclP decls) {
     return (eval(getChild(tree, 0), decls) - eval(getChild(tree, 1), decls));
   case IF:
     return evalIf(tree, decls);
+  case AFFECT: 
+    return evalAff(tree,decls);
   default: 
     fprintf(stderr, "Erreur! etiquette indefinie: %d\n", tree->op);
     exit(UNEXPECTED);

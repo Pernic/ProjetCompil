@@ -56,11 +56,17 @@ void lexError(char c) {
 %}
 
 %%
-{Digit}+        { yylval.I = strtol(yytext, NULL, 0); return(CST); }
-{Letter}{LD}*   { return keywordOrId(); }
 "+"             { return(ADD); }
 "-"             { return(SUB); }
+":="        	{ return(AFFECT); }
 "="             { yylval.C = EQ; return(RELOP); }
 "<>"            { yylval.C = NE; return(RELOP); }
+"<="            { yylval.C = LE; return(RELOP); }
+">="            { yylval.C = GE; return(RELOP); }
+">"             { yylval.C = GT; return(RELOP); }
+"<"             { yylval.C = LT; return(RELOP); }
+{Digit}+        { yylval.I = strtol(yytext, NULL, 0); return(CST); }
+{Letter}{LD}*   { return keywordOrId(); }
 {Symbol}        { return(yytext[0]); }
+
 %%

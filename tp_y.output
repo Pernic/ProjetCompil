@@ -1,3 +1,8 @@
+Terminals unused in grammar
+
+   DECL_LIST
+
+
 Rules useless in parser due to conflicts
 
     5 declL: declL decl
@@ -7,7 +12,11 @@ State 4 conflicts: 1 shift/reduce
 State 8 conflicts: 1 shift/reduce
 State 9 conflicts: 1 shift/reduce, 2 reduce/reduce
 State 10 conflicts: 1 shift/reduce
-State 34 conflicts: 2 shift/reduce
+State 29 conflicts: 1 shift/reduce
+State 30 conflicts: 1 shift/reduce
+State 31 conflicts: 3 shift/reduce
+State 34 conflicts: 4 shift/reduce
+State 36 conflicts: 3 shift/reduce
 
 
 Grammar
@@ -24,49 +33,53 @@ Grammar
     6 decl: ID ';'
 
     7 expr: IF bexpr THEN expr ELSE expr
-    8     | expr ADD expr
-    9     | expr SUB expr
-   10     | CST
-   11     | ID
-   12     | '(' expr ')'
+    8     | IF bexpr THEN expr
+    9     | expr ADD expr
+   10     | expr SUB expr
+   11     | expr AFFECT expr
+   12     | CST
+   13     | ID
+   14     | '(' expr ')'
 
-   13 bexpr: expr RELOP expr
-   14      | '(' bexpr ')'
+   15 bexpr: expr RELOP expr
+   16      | '(' bexpr ')'
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-'(' (40) 12 14
-')' (41) 12 14
+'(' (40) 14 16
+')' (41) 14 16
 ';' (59) 6
 error (256)
-IF (258) 7
-THEN (259) 7
+IF (258) 7 8
+THEN (259) 7 8
 ELSE (260) 7
 BEG (261) 1
 END (262) 1
-ADD (263) 8
-SUB (264) 9
-ID (265) 6 11
-CST (266) 10
-RELOP (267) 13
+ADD (263) 9
+SUB (264) 10
+DECL_LIST (265)
+AFFECT (266) 11
+ID (267) 6 13
+CST (268) 12
+RELOP (269) 15
 
 
 Nonterminals, with rules where they appear
 
-$accept (16)
+$accept (18)
     on left: 0
-programme (17)
+programme (19)
     on left: 1, on right: 0
-declL (18)
+declL (20)
     on left: 2 3 4 5, on right: 1 3 4 5
-decl (19)
+decl (21)
     on left: 6, on right: 2 3 5
-expr (20)
-    on left: 7 8 9 10 11 12, on right: 1 7 8 9 12 13
-bexpr (21)
-    on left: 13 14, on right: 7 14
+expr (22)
+    on left: 7 8 9 10 11 12 13 14, on right: 1 7 8 9 10 11 14 15
+bexpr (23)
+    on left: 15 16, on right: 7 8 16
 
 
 State 0
@@ -198,6 +211,7 @@ State 10
 State 11
 
     7 expr: IF . bexpr THEN expr ELSE expr
+    8     | IF . bexpr THEN expr
 
     IF   shift, and go to state 11
     ID   shift, and go to state 12
@@ -210,21 +224,21 @@ State 11
 
 State 12
 
-   11 expr: ID .
+   13 expr: ID .
 
-    $default  reduce using rule 11 (expr)
+    $default  reduce using rule 13 (expr)
 
 
 State 13
 
-   10 expr: CST .
+   12 expr: CST .
 
-    $default  reduce using rule 10 (expr)
+    $default  reduce using rule 12 (expr)
 
 
 State 14
 
-   12 expr: '(' . expr ')'
+   14 expr: '(' . expr ')'
 
     IF   shift, and go to state 11
     ID   shift, and go to state 12
@@ -237,55 +251,62 @@ State 14
 State 15
 
     1 programme: declL BEG expr . END
-    8 expr: expr . ADD expr
-    9     | expr . SUB expr
+    9 expr: expr . ADD expr
+   10     | expr . SUB expr
+   11     | expr . AFFECT expr
 
-    END  shift, and go to state 20
-    ADD  shift, and go to state 21
-    SUB  shift, and go to state 22
+    END     shift, and go to state 20
+    ADD     shift, and go to state 21
+    SUB     shift, and go to state 22
+    AFFECT  shift, and go to state 23
 
 
 State 16
 
-   12 expr: '(' . expr ')'
-   14 bexpr: '(' . bexpr ')'
+   14 expr: '(' . expr ')'
+   16 bexpr: '(' . bexpr ')'
 
     IF   shift, and go to state 11
     ID   shift, and go to state 12
     CST  shift, and go to state 13
     '('  shift, and go to state 16
 
-    expr   go to state 23
-    bexpr  go to state 24
+    expr   go to state 24
+    bexpr  go to state 25
 
 
 State 17
 
-    8 expr: expr . ADD expr
-    9     | expr . SUB expr
-   13 bexpr: expr . RELOP expr
+    9 expr: expr . ADD expr
+   10     | expr . SUB expr
+   11     | expr . AFFECT expr
+   15 bexpr: expr . RELOP expr
 
-    ADD    shift, and go to state 21
-    SUB    shift, and go to state 22
-    RELOP  shift, and go to state 25
+    ADD     shift, and go to state 21
+    SUB     shift, and go to state 22
+    AFFECT  shift, and go to state 23
+    RELOP   shift, and go to state 26
 
 
 State 18
 
     7 expr: IF bexpr . THEN expr ELSE expr
+    8     | IF bexpr . THEN expr
 
-    THEN  shift, and go to state 26
+    THEN  shift, and go to state 27
 
 
 State 19
 
-    8 expr: expr . ADD expr
-    9     | expr . SUB expr
-   12     | '(' expr . ')'
+    9 expr: expr . ADD expr
+   10     | expr . SUB expr
+   11     | expr . AFFECT expr
+   14     | '(' expr . ')'
 
-    ADD  shift, and go to state 21
-    SUB  shift, and go to state 22
-    ')'  shift, and go to state 27
+    ADD     shift, and go to state 21
+    SUB     shift, and go to state 22
+    AFFECT  shift, and go to state 23
+    ')'     shift, and go to state 28
 
 
 State 20
@@ -297,19 +318,7 @@ State 20
 
 State 21
 
-    8 expr: expr ADD . expr
-
-    IF   shift, and go to state 11
-    ID   shift, and go to state 12
-    CST  shift, and go to state 13
-    '('  shift, and go to state 14
-
-    expr  go to state 28
-
-
-State 22
-
-    9 expr: expr SUB . expr
+    9 expr: expr ADD . expr
 
     IF   shift, and go to state 11
     ID   shift, and go to state 12
@@ -319,29 +328,21 @@ State 22
     expr  go to state 29
 
 
+State 22
+
+   10 expr: expr SUB . expr
+
+    IF   shift, and go to state 11
+    ID   shift, and go to state 12
+    CST  shift, and go to state 13
+    '('  shift, and go to state 14
+
+    expr  go to state 30
+
+
 State 23
 
-    8 expr: expr . ADD expr
-    9     | expr . SUB expr
-   12     | '(' expr . ')'
-   13 bexpr: expr . RELOP expr
-
-    ADD    shift, and go to state 21
-    SUB    shift, and go to state 22
-    RELOP  shift, and go to state 25
-    ')'    shift, and go to state 27
-
-
-State 24
-
-   14 bexpr: '(' bexpr . ')'
-
-    ')'  shift, and go to state 30
-
-
-State 25
-
-   13 bexpr: expr RELOP . expr
+   11 expr: expr AFFECT . expr
 
     IF   shift, and go to state 11
     ID   shift, and go to state 12
@@ -351,76 +352,44 @@ State 25
     expr  go to state 31
 
 
+State 24
+
+    9 expr: expr . ADD expr
+   10     | expr . SUB expr
+   11     | expr . AFFECT expr
+   14     | '(' expr . ')'
+   15 bexpr: expr . RELOP expr
+
+    ADD     shift, and go to state 21
+    SUB     shift, and go to state 22
+    AFFECT  shift, and go to state 23
+    RELOP   shift, and go to state 26
+    ')'     shift, and go to state 28
+
+
+State 25
+
+   16 bexpr: '(' bexpr . ')'
+
+    ')'  shift, and go to state 32
+
+
 State 26
 
-    7 expr: IF bexpr THEN . expr ELSE expr
+   15 bexpr: expr RELOP . expr
 
     IF   shift, and go to state 11
     ID   shift, and go to state 12
     CST  shift, and go to state 13
     '('  shift, and go to state 14
 
-    expr  go to state 32
+    expr  go to state 33
 
 
 State 27
 
-   12 expr: '(' expr ')' .
-
-    $default  reduce using rule 12 (expr)
-
-
-State 28
-
-    8 expr: expr . ADD expr
-    8     | expr ADD expr .
-    9     | expr . SUB expr
-
-    $default  reduce using rule 8 (expr)
-
-
-State 29
-
-    8 expr: expr . ADD expr
-    9     | expr . SUB expr
-    9     | expr SUB expr .
-
-    $default  reduce using rule 9 (expr)
-
-
-State 30
-
-   14 bexpr: '(' bexpr ')' .
-
-    $default  reduce using rule 14 (bexpr)
-
-
-State 31
-
-    8 expr: expr . ADD expr
-    9     | expr . SUB expr
-   13 bexpr: expr RELOP expr .
-
-    ADD  shift, and go to state 21
-    SUB  shift, and go to state 22
-
-    $default  reduce using rule 13 (bexpr)
-
-
-State 32
-
-    7 expr: IF bexpr THEN expr . ELSE expr
-    8     | expr . ADD expr
-    9     | expr . SUB expr
-
-    ELSE  shift, and go to state 33
-    ADD   shift, and go to state 21
-    SUB   shift, and go to state 22
-
-
-State 33
-
-    7 expr: IF bexpr THEN expr ELSE . expr
+    7 expr: IF bexpr THEN . expr ELSE expr
+    8     | IF bexpr THEN . expr
 
     IF   shift, and go to state 11
     ID   shift, and go to state 12
@@ -430,15 +399,121 @@ State 33
     expr  go to state 34
 
 
+State 28
+
+   14 expr: '(' expr ')' .
+
+    $default  reduce using rule 14 (expr)
+
+
+State 29
+
+    9 expr: expr . ADD expr
+    9     | expr ADD expr .
+   10     | expr . SUB expr
+   11     | expr . AFFECT expr
+
+    AFFECT  shift, and go to state 23
+
+    AFFECT    [reduce using rule 9 (expr)]
+    $default  reduce using rule 9 (expr)
+
+
+State 30
+
+    9 expr: expr . ADD expr
+   10     | expr . SUB expr
+   10     | expr SUB expr .
+   11     | expr . AFFECT expr
+
+    AFFECT  shift, and go to state 23
+
+    AFFECT    [reduce using rule 10 (expr)]
+    $default  reduce using rule 10 (expr)
+
+
+State 31
+
+    9 expr: expr . ADD expr
+   10     | expr . SUB expr
+   11     | expr . AFFECT expr
+   11     | expr AFFECT expr .
+
+    ADD     shift, and go to state 21
+    SUB     shift, and go to state 22
+    AFFECT  shift, and go to state 23
+
+    ADD       [reduce using rule 11 (expr)]
+    SUB       [reduce using rule 11 (expr)]
+    AFFECT    [reduce using rule 11 (expr)]
+    $default  reduce using rule 11 (expr)
+
+
+State 32
+
+   16 bexpr: '(' bexpr ')' .
+
+    $default  reduce using rule 16 (bexpr)
+
+
+State 33
+
+    9 expr: expr . ADD expr
+   10     | expr . SUB expr
+   11     | expr . AFFECT expr
+   15 bexpr: expr RELOP expr .
+
+    ADD     shift, and go to state 21
+    SUB     shift, and go to state 22
+    AFFECT  shift, and go to state 23
+
+    $default  reduce using rule 15 (bexpr)
+
+
 State 34
 
-    7 expr: IF bexpr THEN expr ELSE expr .
-    8     | expr . ADD expr
-    9     | expr . SUB expr
+    7 expr: IF bexpr THEN expr . ELSE expr
+    8     | IF bexpr THEN expr .
+    9     | expr . ADD expr
+   10     | expr . SUB expr
+   11     | expr . AFFECT expr
 
-    ADD  shift, and go to state 21
-    SUB  shift, and go to state 22
+    ELSE    shift, and go to state 35
+    ADD     shift, and go to state 21
+    SUB     shift, and go to state 22
+    AFFECT  shift, and go to state 23
+
+    ELSE      [reduce using rule 8 (expr)]
+    ADD       [reduce using rule 8 (expr)]
+    SUB       [reduce using rule 8 (expr)]
+    AFFECT    [reduce using rule 8 (expr)]
+    $default  reduce using rule 8 (expr)
+
+
+State 35
+
+    7 expr: IF bexpr THEN expr ELSE . expr
+
+    IF   shift, and go to state 11
+    ID   shift, and go to state 12
+    CST  shift, and go to state 13
+    '('  shift, and go to state 14
+
+    expr  go to state 36
+
+
+State 36
+
+    7 expr: IF bexpr THEN expr ELSE expr .
+    9     | expr . ADD expr
+   10     | expr . SUB expr
+   11     | expr . AFFECT expr
+
+    ADD     shift, and go to state 21
+    SUB     shift, and go to state 22
+    AFFECT  shift, and go to state 23
 
     ADD       [reduce using rule 7 (expr)]
     SUB       [reduce using rule 7 (expr)]
+    AFFECT    [reduce using rule 7 (expr)]
     $default  reduce using rule 7 (expr)

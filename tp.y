@@ -3,7 +3,7 @@
  * Bison ecrase le contenu de tp_y.h a partir de la description de la ligne
  * suivante. C'est donc cette ligne qu'il faut adapter si besoin, pas tp_y.h !
  */
-%token IF THEN ELSE BEG END ADD SUB
+%token IF THEN ELSE BEG END ADD SUB DECL_LIST AFFECT
 %token <S> ID	/* voir %type ci-dessous pour le sens de <S> et Cie */
 %token <I> CST RELOP
 
@@ -46,10 +46,10 @@ programme : declL BEG expr END
 ;
 
 /* Une liste eventuellement vide de declarations de variables */
-declL : decl { $$ = addToScope($1,$1);}
-| decl declL { $$ = addToScope($2,$1);}
-| declL declL { $$ = addToScope($1,$2);}
-| declL decl { $$ = addToScope($1,$2);}
+declL : decl { $$ =  makeTree(DECL_LIST, 1, $1);}
+| decl declL { $$ = makeTree(DECL_LIST, 2, $1,$2);}
+| declL declL { $$ = makeTree(DECL_LIST, 2, $1,$2);}
+| declL decl { $$ = makeTree(DECL_LIST, 2, $1,$2);}
 ;
 
 
@@ -69,10 +69,14 @@ decl : ID ';' { $$ = makeVar($1);}
  */
 expr : IF bexpr THEN expr ELSE expr
     { $$ = makeTree(IF, 3, $2, $4, $6); }
+|IF bexpr THEN expr
+    { $$ = makeTree(IF,2,$2,$4);}
 | expr ADD expr
     { $$ = makeTree(ADD, 2, $1, $3); }
 | expr SUB expr
     { $$ = makeTree(SUB, 2, $1, $3); }
+|expr AFFECT expr
+    { $$ = makeTree(AFFECT,2,$1,$3);}
 | CST
     { $$ = makeLeafInt(CST, $1); }
 | ID
