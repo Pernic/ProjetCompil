@@ -1,5 +1,5 @@
 OBJ=tp.o tp_l.o tp_y.o print.o
-CFLAGS=-Wall -ansi -I./ -g 
+CFLAGS=-Wall -ansi -I./ -g -DDEBUG
 
 # On MacOS X, change the next line to -ll instead of -lfl
 LDFLAGS= -g -lfl
