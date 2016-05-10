@@ -182,11 +182,11 @@ bool checkScope(TreeP tree, VarDeclP lvar) {
  */
 VarDeclP addToScope(VarDeclP list, VarDeclP nouv) {
   
-  VarDeclP *res = &list;
-  while((*res)->next != NIL(VarDecl)){
-    res = &((*res)->next);
+  VarDeclP res = list;
+  while(res->next != NIL(VarDeclP)){
+    res = res->next;
   }
-  (*res)->next = nouv;
+  res->next = &nouv;
   return list;
 }
 
@@ -194,7 +194,8 @@ VarDeclP addToScope(VarDeclP list, VarDeclP nouv) {
 /* Construit le squelette d'un couple (variable, valeur), sans la valeur. */
 VarDeclP makeVar(char *name) {
   VarDeclP res = NEW(1, VarDecl);
-  res->name = name; res->next = NIL(VarDecl);
+  res->name = name; 
+  res->next = NIL(VarDecl);
   return(res);
 }
 
@@ -209,7 +210,27 @@ VarDeclP declVar(char *name, TreeP tree, VarDeclP currentScope) {
 
 /* Evaluation d'une variable */
 int evalVar(TreeP tree, VarDeclP decls) {
-  return 0;
+  
+  int resultat = 0 ;
+  if (tree->nbChildren == 0){
+    if(tree->op == "CST")
+      return (int) tree->u.val;
+    if(tree->op == "ID" || tree->op == "STR"){
+      char *name = (char*) tree->u.str;
+      VarDeclP res = decls;
+      while(res->next != NIL(VarDeclP)){
+	if(!strcmp(res->name,name))
+	  return res->val;
+        res = res->next;
+      }
+    }
+  }else{
+    short i = 0; 
+    for(i= 0;i < (tree->nbChildren) ;i++)
+      resultat = resultat + evalVar((TreeP) tree->u.children[i],decls);
+  }	
+  
+  return resultat;
 }
 
 
