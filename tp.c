@@ -253,8 +253,32 @@ int evalVar(TreeP tree, VarDeclP decls) {
 
 /* Evaluation d'un if then else. Attention a n'evaluer que la partie necessaire ! */
 int evalIf(TreeP tree, VarDeclP decls) {
-  return 0;
+int resultat = 0;
+
+TreeP tree_cond = getChild(tree, 0); 
+TreeP tree_vrai = getChild(tree, 1); 
+if(tree->nbChildren == 2) //juste un if
+{
+	if(eval(tree_cond,decls))
+	{
+		return eval(tree_vrai,decls);
+	}
+	return 0;
 }
+else if(tree->nbChildren == 3) //if else
+{
+	if(eval(tree_cond,decls))
+	{
+		return eval(tree_vrai,decls);
+	}
+	else
+	{
+		TreeP tree_faux = getChild(tree, 2); 
+		return eval(tree_faux,decls);
+	} 
+} 
+}
+
 
 
 VarDeclP evalAff (TreeP tree, VarDeclP decls) {
