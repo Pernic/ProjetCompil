@@ -65,8 +65,16 @@ void lexError(char c) {
 ">="            { yylval.C = GE; return(RELOP); }
 ">"             { yylval.C = GT; return(RELOP); }
 "<"             { yylval.C = LT; return(RELOP); }
+"*"		{ return(MUL);}
+"begin"		{ return(BEG); }
+"end"		{ return(END); }
+"if"		{ return(IF); }
+"else"		{ return(ELSE); }
+"then"		{ return(THEN); }
 {Digit}+        { yylval.I = strtol(yytext, NULL, 0); return(CST); }
 {Letter}{LD}*   { return keywordOrId(); }
 {Symbol}        { return(yytext[0]); }
-
+" "		{}
+'\n'		{}
+. {printf("Erreur lexeur %s\n", yytext);}
 %%

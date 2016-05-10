@@ -54,9 +54,10 @@ extern int yydebug;
     SUB = 264,
     DECL_LIST = 265,
     AFFECT = 266,
-    ID = 267,
-    CST = 268,
-    RELOP = 269
+    MUL = 267,
+    ID = 268,
+    CST = 269,
+    RELOP = 270
   };
 #endif
 

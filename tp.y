@@ -3,7 +3,7 @@
  * Bison ecrase le contenu de tp_y.h a partir de la description de la ligne
  * suivante. C'est donc cette ligne qu'il faut adapter si besoin, pas tp_y.h !
  */
-%token IF THEN ELSE BEG END ADD SUB DECL_LIST AFFECT
+%token IF THEN ELSE BEG END ADD SUB DECL_LIST AFFECT MUL
 %token <S> ID	/* voir %type ci-dessous pour le sens de <S> et Cie */
 %token <I> CST RELOP
 
@@ -22,10 +22,14 @@
 %type <T> expr bexpr decl declL
 
 %{
-#include "tp.h"     /* les definition des types et les etiquettes des noeuds */
+#include "tp.h"
+#include <stdio.h>     /* les definition des types et les etiquettes des noeuds */
 
 extern int yylex();	/* fournie par Flex */
 extern void yyerror();  /* definie dans tp.c */
+
+Tree t;
+
 %}
 
 %% 
@@ -42,7 +46,7 @@ extern void yyerror();  /* definie dans tp.c */
  */
 
  /* "programme" est l'axiome de la grammaire */
-programme : declL BEG expr END 
+programme : declL BEG expr END {printf("Prog !!!!!!!!!!! \n");}//expr {printf("Expr !!!!!!!!!!! \n");}//
 ;
 
 /* Une liste eventuellement vide de declarations de variables */
@@ -55,6 +59,7 @@ declL : decl { $$ =  makeTree(DECL_LIST, 1, $1);}
 
 /* une declaration de variable ou de fonction, terminee par un ';'. */
 decl : ID ';' { $$ = makeVar($1);}
+| ID AFFECT expr ';' { $$ = makeTree(AFFECT,2,$1,$3);}
 ;
 
 
@@ -75,6 +80,8 @@ expr : IF bexpr THEN expr ELSE expr
     { $$ = makeTree(ADD, 2, $1, $3); }
 | expr SUB expr
     { $$ = makeTree(SUB, 2, $1, $3); }
+| expr MUL expr
+    { $$ = makeTree(MUL, 2, $1, $3); }
 |expr AFFECT expr
     { $$ = makeTree(AFFECT,2,$1,$3);}
 | CST

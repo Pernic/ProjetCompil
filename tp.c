@@ -251,7 +251,7 @@ int resultat = 0;
 
 TreeP tree_cond = getChild(tree, 0); 
 TreeP tree_vrai = getChild(tree, 1); 
-if(tree->nbChildren == 2) //juste un if
+if(tree->nbChildren == 2) 
 {
 	if(eval(tree_cond,decls))
 	{
@@ -259,7 +259,7 @@ if(tree->nbChildren == 2) //juste un if
 	}
 	return 0;
 }
-else if(tree->nbChildren == 3) //if else
+else if(tree->nbChildren == 3) 
 {
 	if(eval(tree_cond,decls))
 	{
@@ -311,6 +311,8 @@ int eval(TreeP tree, VarDeclP decls) {
     return evalIf(tree, decls);
   case AFFECT: 
     return evalAff(tree,decls);
+  case MUL : 
+    return (eval(getChild(tree, 0), decls) * eval(getChild(tree, 1), decls));
   default: 
     fprintf(stderr, "Erreur! etiquette indefinie: %d\n", tree->op);
     exit(UNEXPECTED);
