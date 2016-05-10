@@ -204,7 +204,23 @@ VarDeclP makeVar(char *name) {
  * l'evaluation de cette expression, sauf si on est en mode noEval
  */
 VarDeclP declVar(char *name, TreeP tree, VarDeclP currentScope) {
-  return NIL(VarDecl);
+
+  VarDeclP res = currentScope;
+  VarDeclP last = currentScope;
+  while(res != NIL(VarDecl))
+  {
+    if(!strcmp(res->name, name)) 
+    {
+      return currentScope;
+    }
+    last = res;
+    res = res->next;
+  }
+  VarDeclP nouv = malloc(sizeof(VarDecl));
+  nouv->name = name;
+  nouv->val = evalVar(tree, nouv);
+  last->next = nouv;
+  return currentScope;
 }
 
 
