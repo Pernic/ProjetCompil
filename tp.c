@@ -6,6 +6,11 @@
 #include "tp.h"
 #include "tp_y.h"
 
+#ifdef DEBUG
+ #define DEBUG(x) x
+#else
+  #define DEBUG(x) if(0) 0;
+#endif
 /*
  * Toute cette premiere partie n'a (normalement) pas besoin d'etre modifiee
  */
@@ -35,6 +40,8 @@ FILE *fd = NIL(FILE);
  * Options: -[eE] -[vV] -[hH?]
  */
 int main(int argc, char **argv) {
+
+  DEBUG(printf("Debug enabled\n"));
   int fi;
   int i, res;
 
