@@ -120,7 +120,13 @@ extern int yydebug;
     MUL = 267,
     ID = 268,
     CST = 269,
-    RELOP = 270
+    RELOP = 270,
+    EQ = 271,
+    NE = 272,
+    LE = 273,
+    GE = 274,
+    GT = 275,
+    LT = 276
   };
 #endif
 
@@ -1234,7 +1240,7 @@ yyreduce:
     {
         case 2:
 #line 49 "tp.y" /* yacc.c:1646  */
-    {printf("Prog !!!!!!!!!!! \n");}
+    {printf("Prog !!!!!!!!!!! \n");evalMain((yyvsp[-1].T),(yyvsp[-3].T));}
 #line 1239 "tp_y.c" /* yacc.c:1646  */
     break;
 
@@ -1270,7 +1276,7 @@ yyreduce:
 
   case 8:
 #line 62 "tp.y" /* yacc.c:1646  */
-    { (yyval.T) = makeTree(AFFECT,2,(yyvsp[-3].S),(yyvsp[-1].T));}
+    { (yyval.T) = makeTree(AFFECT,2,makeLeafStr(ID, (yyvsp[-3].S)),(yyvsp[-1].T));}
 #line 1275 "tp_y.c" /* yacc.c:1646  */
     break;
 
@@ -1330,7 +1336,7 @@ yyreduce:
 
   case 18:
 #line 99 "tp.y" /* yacc.c:1646  */
-    { (yyval.T) = makeTree((yyvsp[-1].I), 2, (yyvsp[-2].T), (yyvsp[0].T)); }
+    { (yyval.T) = makeTree(RELOP, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
 #line 1335 "tp_y.c" /* yacc.c:1646  */
     break;
 

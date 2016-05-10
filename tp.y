@@ -46,7 +46,7 @@ Tree t;
  */
 
  /* "programme" est l'axiome de la grammaire */
-programme : declL BEG expr END {printf("Prog !!!!!!!!!!! \n");}//expr {printf("Expr !!!!!!!!!!! \n");}//
+programme : declL BEG expr END {printf("Prog !!!!!!!!!!! \n");evalMain($3,$1);}
 ;
 
 /* Une liste eventuellement vide de declarations de variables */
@@ -59,7 +59,7 @@ declL : decl { $$ =  makeTree(DECL_LIST, 1, $1);}
 
 /* une declaration de variable ou de fonction, terminee par un ';'. */
 decl : ID ';' { $$ = makeVar($1);}
-| ID AFFECT expr ';' { $$ = makeTree(AFFECT,2,$1,$3);}
+| ID AFFECT expr ';' { $$ = makeTree(AFFECT,2,makeLeafStr(ID, $1),$3);}
 ;
 
 
@@ -96,7 +96,7 @@ expr : IF bexpr THEN expr ELSE expr
  * ne peuvent apparaitre que comme conditions dans un if-teh-else.
  */ 
 bexpr : expr RELOP expr 
-    { $$ = makeTree($2, 2, $1, $3); }
+    { $$ = makeTree(RELOP, 2, $1, $3); }
 | '(' bexpr ')'
     { $$ = $2; }
 ;
