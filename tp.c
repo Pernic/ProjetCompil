@@ -41,7 +41,7 @@ FILE *fd = NIL(FILE);
  */
 int main(int argc, char **argv) {
 
-  DEBUG(printf("Debug enabled\n"));
+  DEBUG(printf("Debug enabled\n");)
   int fi;
   int i, res;
 
@@ -251,7 +251,7 @@ int resultat = 0;
 
 TreeP tree_cond = getChild(tree, 0); 
 TreeP tree_vrai = getChild(tree, 1); 
-if(tree->nbChildren == 2) //juste un if
+if(tree->nbChildren == 2)
 {
 	if(eval(tree_cond,decls))
 	{
@@ -259,7 +259,7 @@ if(tree->nbChildren == 2) //juste un if
 	}
 	return 0;
 }
-else if(tree->nbChildren == 3) //if else
+else if(tree->nbChildren == 3)
 {
 	if(eval(tree_cond,decls))
 	{
@@ -294,6 +294,7 @@ VarDeclP evalDecls (TreeP tree) {
  */
 int eval(TreeP tree, VarDeclP decls) {
   if (tree == NIL(Tree)) { exit(UNEXPECTED); }
+  DEBUG(pprint(tree);)
   switch (tree->op) {
   case ID:
     return evalVar(tree, decls);
