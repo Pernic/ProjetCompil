@@ -181,7 +181,8 @@ bool checkScope(TreeP tree, VarDeclP lvar) {
  * tete et renvoie la nouvelle liste
  */
 VarDeclP addToScope(VarDeclP list, VarDeclP nouv) {
-  
+  if(list == NIL(VarDeclP))
+    return nouv;
   VarDeclP res = list;
   while(res->next != NIL(VarDeclP)){
     res = res->next;

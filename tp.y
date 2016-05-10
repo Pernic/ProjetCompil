@@ -48,7 +48,7 @@ programme : declL BEG expr END
 /* Une liste eventuellement vide de declarations de variables */
 declL : decl { $$ = addToScope($1,$1);}
 | decl declL { $$ = addToScope($2,$1);}
-| declL declL { $$ = addToScope($1,$1);}
+| declL declL { $$ = addToScope($1,$2);}
 | declL decl { $$ = addToScope($1,$2);}
 ;
 

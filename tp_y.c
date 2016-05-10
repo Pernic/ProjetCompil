@@ -1227,7 +1227,7 @@ yyreduce:
 
   case 5:
 #line 51 "tp.y" /* yacc.c:1646  */
-    { (yyval.T) = addToScope((yyvsp[-1].T),(yyvsp[-1].T));}
+    { (yyval.T) = addToScope((yyvsp[-1].T),(yyvsp[0].T));}
 #line 1232 "tp_y.c" /* yacc.c:1646  */
     break;
 
