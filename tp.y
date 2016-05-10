@@ -5,7 +5,7 @@
  */
 %token IF THEN ELSE BEG END ADD SUB DECL_LIST AFFECT MUL
 %token <S> ID	/* voir %type ci-dessous pour le sens de <S> et Cie */
-%token <I> CST RELOP
+%token <I> CST RELOP EQ NE LE GE GT LT
 
 /* indications de precedence d'associativite. Les operateurs sur une meme
  * ligne (separes par un espace) ont la meme priorite. Les ligns sont donnees
@@ -95,8 +95,19 @@ expr : IF bexpr THEN expr ELSE expr
 /* Expression booleenne: il n'y a pas de booleen dans le langage. Ces expressions
  * ne peuvent apparaitre que comme conditions dans un if-teh-else.
  */ 
-bexpr : expr RELOP expr 
-    { $$ = makeTree(RELOP, 2, $1, $3); }
+
+bexpr : expr EQ expr 
+    { $$ = makeTree(EQ, 2, $1, $3); }
+| expr NE expr 
+    { $$ = makeTree(NE, 2, $1, $3); }
+| expr LE expr 
+    { $$ = makeTree(LE, 2, $1, $3); }
+| expr GE expr 
+    { $$ = makeTree(GE, 2, $1, $3); }
+| expr GT expr 
+    { $$ = makeTree(GT, 2, $1, $3); }
+| expr LT expr 
+    { $$ = makeTree(LT, 2, $1, $3); }
 | '(' bexpr ')'
     { $$ = $2; }
 ;
