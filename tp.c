@@ -181,7 +181,33 @@ TreeP makeLeafInt(short op, int val) {
  * la valeur de cet id.
  */
 bool checkScope(TreeP tree, VarDeclP lvar) {
-  return FALSE;
+  
+  int i = 0;
+  TreeP tempTree;
+  int result = 1;
+  VarDeclP nextVar;
+
+  for(i = 0; i < tree->nbChildren; i++)
+  {
+    tempTree = getChild(tree, i);
+    if(!(result = result && checkScope(tempTree, lvar)))
+      return FALSE;
+  }
+
+  if(tree->op == ID)
+  {
+    if(lvar == NIL(VarDeclP))
+      return FALSE;
+
+    while((lvar = lvar->next) != NIL(VarDeclP))
+    {
+        if(!strcmp(tree->u.str, lvar->name))
+         return TRUE;
+    }
+  
+    return FALSE;
+  }
+  return TRUE;
 }
 
 /* Verifie si besoin que nouv n'apparait pas deja dans list. l'ajoute en
@@ -350,6 +376,11 @@ int evalMain(TreeP tree, VarDeclP lvar) {
   if (noEval) {
     fprintf(stderr, "\nSkipping evaluation step.\n");
   } else {
+      if(!checkScope(tree, lvar))
+      {
+        printf("Undeclared variable");
+        return -1;
+      }
       res = eval(tree, lvar);
       printf("\n/*Result: %d*/\n", res);
   }
