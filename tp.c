@@ -276,7 +276,31 @@ if(tree->nbChildren == 2)
 
 
 VarDeclP evalAff (TreeP tree, VarDeclP decls) {
-  return NIL(VarDecl);
+  char *name = (char*) tree->u.str;
+  int valeur = evalVar(tree,decls);
+  
+  int ispresent = 0;
+  VarDeclP res = decls;
+  
+  while(res->next != NIL(VarDeclP)){
+    if(strcmp(res->name,name))
+    {
+		ispresent = 1;
+       res->val = valeur;
+    }
+    res = res->next;
+  }
+  
+  /* la var n'existe pas */
+  if(!ispresent) 
+  {
+	  VarDeclP nouvelle_var = malloc(sizeof(VarDecl));
+	  nouvelle_var->name = name;
+	  nouvelle_var->val = valeur;
+	  res->next = nouvelle_var;
+  }
+  
+  return decls;
 }
 
 

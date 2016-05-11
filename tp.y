@@ -59,7 +59,7 @@ declL : decl { $$ =  makeTree(DECL_LIST, 1, $1);}
 
 /* une declaration de variable ou de fonction, terminee par un ';'. */
 decl : ID ';' { $$ = makeVar($1);}
-| ID AFFECT expr ';' { $$ = makeTree(AFFECT,2,makeLeafStr(ID, $1),$3);}
+| ID AFFECT expr ';' { $$ = evalDecls(AFFECT,2,makeLeafStr(ID, $1),$3);}
 ;
 
 
