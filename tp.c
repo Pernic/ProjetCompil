@@ -311,9 +311,32 @@ VarDeclP evalAff (TreeP tree, VarDeclP decls) {
 
 /* Ici decls correspond au sous-arbre qui est la partie declarative */
 VarDeclP evalDecls (TreeP tree) {
+  
+  VarDeclP lvar = NIL(VarDecl);
+  int i = 0;
+  TreeP tempTree;
+  for(i = 0; i < tree->nbChildren; i++)
+  {
+    tempTree = getChild(tree, i);
+    if(tree->op != AFFECT)
+    {
+      printf("Unauthorized operation\n");
+      return -1;
+    }
+   
+   if(lvar == NIL(VarDecl))
+   lvar = evalAff(tempTree, lvar);
+   else
+   {
+    lvar->next = evalAff(tempTree, lvar);
+    lvar = lvar->next;
+   }
+   }
 
+   
+  pprint(tree);
 
-  return NIL(VarDecl);
+  return lvar;
 }
 
 
@@ -325,7 +348,7 @@ VarDeclP evalDecls (TreeP tree) {
  */
 int eval(TreeP tree, VarDeclP decls) {
   if (tree == NIL(Tree)) { exit(UNEXPECTED); }
-  DEBUG(pprint(tree);)
+  /*DEBUG(pprint(tree);)*/
   switch (tree->op) {
   case ID:
     return evalVar(tree, decls);
