@@ -346,6 +346,8 @@ int eval(TreeP tree, VarDeclP decls) {
     return evalIf(getChild(tree, 0), decls);
   case AFFECT: 
     return evalAff(tree,decls);
+  case DECL_LIST: 
+    return evalDecls(tree);
   case MUL : 
     return (eval(getChild(tree, 0), decls) * eval(getChild(tree, 1), decls));
   default: 
