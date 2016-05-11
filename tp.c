@@ -285,6 +285,8 @@ VarDeclP evalAff (TreeP tree, VarDeclP decls) {
 
 /* Ici decls correspond au sous-arbre qui est la partie declarative */
 VarDeclP evalDecls (TreeP tree) {
+
+
   return NIL(VarDecl);
 }
 
@@ -314,9 +316,7 @@ int eval(TreeP tree, VarDeclP decls) {
   case LT2:
     return (eval(getChild(tree, 0), decls) < eval(getChild(tree, 1), decls));
   case IF:
-  case AFFECT: 
-    return evalAff(tree,decls);
-  case MUL : 
+   case MUL : 
     return (eval(getChild(tree, 0), decls) * eval(getChild(tree, 1), decls));
   default: 
     fprintf(stderr, "Erreur! etiquette indefinie: %d\n", tree->op);
