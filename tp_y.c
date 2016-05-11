@@ -121,12 +121,12 @@ extern int yydebug;
     ID = 268,
     CST = 269,
     RELOP = 270,
-    EQ = 271,
-    NE = 272,
-    LE = 273,
-    GE = 274,
-    GT = 275,
-    LT = 276
+    EQ2 = 271,
+    NE2 = 272,
+    LE2 = 273,
+    GE2 = 274,
+    GT2 = 275,
+    LT2 = 276
   };
 #endif
 
@@ -452,8 +452,8 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "IF", "THEN", "ELSE", "BEG", "END",
-  "ADD", "SUB", "DECL_LIST", "AFFECT", "MUL", "ID", "CST", "RELOP", "EQ",
-  "NE", "LE", "GE", "GT", "LT", "';'", "'('", "')'", "$accept",
+  "ADD", "SUB", "DECL_LIST", "AFFECT", "MUL", "ID", "CST", "RELOP", "EQ2",
+  "NE2", "LE2", "GE2", "GT2", "LT2", "';'", "'('", "')'", "$accept",
   "programme", "declL", "decl", "expr", "bexpr", YY_NULLPTR
 };
 #endif
@@ -1346,37 +1346,37 @@ yyreduce:
 
   case 18:
 #line 100 "tp.y" /* yacc.c:1646  */
-    { (yyval.T) = makeTree(EQ, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
+    { (yyval.T) = makeTree(EQ2, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
 #line 1351 "tp_y.c" /* yacc.c:1646  */
     break;
 
   case 19:
 #line 102 "tp.y" /* yacc.c:1646  */
-    { (yyval.T) = makeTree(NE, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
+    { (yyval.T) = makeTree(NE2, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
 #line 1357 "tp_y.c" /* yacc.c:1646  */
     break;
 
   case 20:
 #line 104 "tp.y" /* yacc.c:1646  */
-    { (yyval.T) = makeTree(LE, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
+    { (yyval.T) = makeTree(LE2, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
 #line 1363 "tp_y.c" /* yacc.c:1646  */
     break;
 
   case 21:
 #line 106 "tp.y" /* yacc.c:1646  */
-    { (yyval.T) = makeTree(GE, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
+    { (yyval.T) = makeTree(GE2, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
 #line 1369 "tp_y.c" /* yacc.c:1646  */
     break;
 
   case 22:
 #line 108 "tp.y" /* yacc.c:1646  */
-    { (yyval.T) = makeTree(GT, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
+    { (yyval.T) = makeTree(GT2, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
 #line 1375 "tp_y.c" /* yacc.c:1646  */
     break;
 
   case 23:
 #line 110 "tp.y" /* yacc.c:1646  */
-    { (yyval.T) = makeTree(LT, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
+    { (yyval.T) = makeTree(LT2, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
 #line 1381 "tp_y.c" /* yacc.c:1646  */
     break;
 

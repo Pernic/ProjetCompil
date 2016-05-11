@@ -58,12 +58,12 @@ extern int yydebug;
     ID = 268,
     CST = 269,
     RELOP = 270,
-    EQ = 271,
-    NE = 272,
-    LE = 273,
-    GE = 274,
-    GT = 275,
-    LT = 276
+    EQ2 = 271,
+    NE2 = 272,
+    LE2 = 273,
+    GE2 = 274,
+    GT2 = 275,
+    LT2 = 276
   };
 #endif
 

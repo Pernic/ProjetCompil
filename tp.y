@@ -5,7 +5,7 @@
  */
 %token IF THEN ELSE BEG END ADD SUB DECL_LIST AFFECT MUL
 %token <S> ID	/* voir %type ci-dessous pour le sens de <S> et Cie */
-%token <I> CST RELOP EQ NE LE GE GT LT
+%token <I> CST RELOP EQ2 NE2 LE2 GE2 GT2 LT2
 
 /* indications de precedence d'associativite. Les operateurs sur une meme
  * ligne (separes par un espace) ont la meme priorite. Les ligns sont donnees
@@ -96,18 +96,18 @@ expr : IF bexpr THEN expr ELSE expr
  * ne peuvent apparaitre que comme conditions dans un if-teh-else.
  */ 
 
-bexpr : expr EQ expr 
-    { $$ = makeTree(EQ, 2, $1, $3); }
-| expr NE expr 
-    { $$ = makeTree(NE, 2, $1, $3); }
-| expr LE expr 
-    { $$ = makeTree(LE, 2, $1, $3); }
-| expr GE expr 
-    { $$ = makeTree(GE, 2, $1, $3); }
-| expr GT expr 
-    { $$ = makeTree(GT, 2, $1, $3); }
-| expr LT expr 
-    { $$ = makeTree(LT, 2, $1, $3); }
+bexpr : expr EQ2 expr 
+    { $$ = makeTree(EQ2, 2, $1, $3); }
+| expr NE2 expr 
+    { $$ = makeTree(NE2, 2, $1, $3); }
+| expr LE2 expr 
+    { $$ = makeTree(LE2, 2, $1, $3); }
+| expr GE2 expr 
+    { $$ = makeTree(GE2, 2, $1, $3); }
+| expr GT2 expr 
+    { $$ = makeTree(GT2, 2, $1, $3); }
+| expr LT2 expr 
+    { $$ = makeTree(LT2, 2, $1, $3); }
 | '(' bexpr ')'
     { $$ = $2; }
 ;

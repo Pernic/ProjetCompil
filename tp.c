@@ -308,8 +308,9 @@ int eval(TreeP tree, VarDeclP decls) {
     return (eval(getChild(tree, 0), decls) + eval(getChild(tree, 1), decls));
   case SUB:
     return (eval(getChild(tree, 0), decls) - eval(getChild(tree, 1), decls));
+  case LT2:
+    return (eval(getChild(tree, 0), decls) < eval(getChild(tree, 1), decls));
   case IF:
-    return evalIf(tree, decls);
   case AFFECT: 
     return evalAff(tree,decls);
   case MUL : 

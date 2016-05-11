@@ -59,12 +59,12 @@ void lexError(char c) {
 "+"             { return(ADD); }
 "-"             { return(SUB); }
 ":="        	{ return(AFFECT); }
-"="             { yylval.C = EQ; return(EQ); }
-"<>"            { yylval.C = NE; return(NE); }
-"<="            { yylval.C = LE; return(LE); }
-">="            { yylval.C = GE; return(GE); }
-">"             { yylval.C = GT; return(GT); }
-"<"             { yylval.C = LT; return(LT); }
+"="             { yylval.C = EQ; return(EQ2); }
+"<>"            { yylval.C = NE; return(NE2); }
+"<="            { yylval.C = LE; return(LE2); }
+">="            { yylval.C = GE; return(GE2); }
+">"             { yylval.C = GT; return(GT2); }
+"<"             { yylval.C = LT; return(LT2); }
 "*"		{ return(MUL);}
 "begin"		{ return(BEG); }
 "end"		{ return(END); }

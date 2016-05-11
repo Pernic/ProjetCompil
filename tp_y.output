@@ -45,12 +45,12 @@ Grammar
    15     | ID
    16     | '(' expr ')'
 
-   17 bexpr: expr EQ expr
-   18      | expr NE expr
-   19      | expr LE expr
-   20      | expr GE expr
-   21      | expr GT expr
-   22      | expr LT expr
+   17 bexpr: expr EQ2 expr
+   18      | expr NE2 expr
+   19      | expr LE2 expr
+   20      | expr GE2 expr
+   21      | expr GT2 expr
+   22      | expr LT2 expr
    23      | '(' bexpr ')'
 
 
@@ -74,12 +74,12 @@ MUL (267) 12
 ID (268) 6 7 15
 CST (269) 14
 RELOP (270)
-EQ (271) 17
-NE (272) 18
-LE (273) 19
-GE (274) 20
-GT (275) 21
-LT (276) 22
+EQ2 (271) 17
+NE2 (272) 18
+LE2 (273) 19
+GE2 (274) 20
+GT2 (275) 21
+LT2 (276) 22
 
 
 Nonterminals, with rules where they appear
@@ -329,23 +329,23 @@ State 19
    11     | expr . SUB expr
    12     | expr . MUL expr
    13     | expr . AFFECT expr
-   17 bexpr: expr . EQ expr
-   18      | expr . NE expr
-   19      | expr . LE expr
-   20      | expr . GE expr
-   21      | expr . GT expr
-   22      | expr . LT expr
+   17 bexpr: expr . EQ2 expr
+   18      | expr . NE2 expr
+   19      | expr . LE2 expr
+   20      | expr . GE2 expr
+   21      | expr . GT2 expr
+   22      | expr . LT2 expr
 
     ADD     shift, and go to state 22
     SUB     shift, and go to state 23
     AFFECT  shift, and go to state 24
     MUL     shift, and go to state 25
-    EQ      shift, and go to state 30
-    NE      shift, and go to state 31
-    LE      shift, and go to state 32
-    GE      shift, and go to state 33
-    GT      shift, and go to state 34
-    LT      shift, and go to state 35
+    EQ2     shift, and go to state 30
+    NE2     shift, and go to state 31
+    LE2     shift, and go to state 32
+    GE2     shift, and go to state 33
+    GT2     shift, and go to state 34
+    LT2     shift, and go to state 35
 
 
 State 20
@@ -440,23 +440,23 @@ State 28
    12     | expr . MUL expr
    13     | expr . AFFECT expr
    16     | '(' expr . ')'
-   17 bexpr: expr . EQ expr
-   18      | expr . NE expr
-   19      | expr . LE expr
-   20      | expr . GE expr
-   21      | expr . GT expr
-   22      | expr . LT expr
+   17 bexpr: expr . EQ2 expr
+   18      | expr . NE2 expr
+   19      | expr . LE2 expr
+   20      | expr . GE2 expr
+   21      | expr . GT2 expr
+   22      | expr . LT2 expr
 
     ADD     shift, and go to state 22
     SUB     shift, and go to state 23
     AFFECT  shift, and go to state 24
     MUL     shift, and go to state 25
-    EQ      shift, and go to state 30
-    NE      shift, and go to state 31
-    LE      shift, and go to state 32
-    GE      shift, and go to state 33
-    GT      shift, and go to state 34
-    LT      shift, and go to state 35
+    EQ2     shift, and go to state 30
+    NE2     shift, and go to state 31
+    LE2     shift, and go to state 32
+    GE2     shift, and go to state 33
+    GT2     shift, and go to state 34
+    LT2     shift, and go to state 35
     ')'     shift, and go to state 37
 
 
@@ -469,7 +469,7 @@ State 29
 
 State 30
 
-   17 bexpr: expr EQ . expr
+   17 bexpr: expr EQ2 . expr
 
     IF   shift, and go to state 12
     ID   shift, and go to state 13
@@ -481,7 +481,7 @@ State 30
 
 State 31
 
-   18 bexpr: expr NE . expr
+   18 bexpr: expr NE2 . expr
 
     IF   shift, and go to state 12
     ID   shift, and go to state 13
@@ -493,7 +493,7 @@ State 31
 
 State 32
 
-   19 bexpr: expr LE . expr
+   19 bexpr: expr LE2 . expr
 
     IF   shift, and go to state 12
     ID   shift, and go to state 13
@@ -505,7 +505,7 @@ State 32
 
 State 33
 
-   20 bexpr: expr GE . expr
+   20 bexpr: expr GE2 . expr
 
     IF   shift, and go to state 12
     ID   shift, and go to state 13
@@ -517,7 +517,7 @@ State 33
 
 State 34
 
-   21 bexpr: expr GT . expr
+   21 bexpr: expr GT2 . expr
 
     IF   shift, and go to state 12
     ID   shift, and go to state 13
@@ -529,7 +529,7 @@ State 34
 
 State 35
 
-   22 bexpr: expr LT . expr
+   22 bexpr: expr LT2 . expr
 
     IF   shift, and go to state 12
     ID   shift, and go to state 13
@@ -644,7 +644,7 @@ State 43
    11     | expr . SUB expr
    12     | expr . MUL expr
    13     | expr . AFFECT expr
-   17 bexpr: expr EQ expr .
+   17 bexpr: expr EQ2 expr .
 
     ADD     shift, and go to state 22
     SUB     shift, and go to state 23
@@ -660,7 +660,7 @@ State 44
    11     | expr . SUB expr
    12     | expr . MUL expr
    13     | expr . AFFECT expr
-   18 bexpr: expr NE expr .
+   18 bexpr: expr NE2 expr .
 
     ADD     shift, and go to state 22
     SUB     shift, and go to state 23
@@ -676,7 +676,7 @@ State 45
    11     | expr . SUB expr
    12     | expr . MUL expr
    13     | expr . AFFECT expr
-   19 bexpr: expr LE expr .
+   19 bexpr: expr LE2 expr .
 
     ADD     shift, and go to state 22
     SUB     shift, and go to state 23
@@ -692,7 +692,7 @@ State 46
    11     | expr . SUB expr
    12     | expr . MUL expr
    13     | expr . AFFECT expr
-   20 bexpr: expr GE expr .
+   20 bexpr: expr GE2 expr .
 
     ADD     shift, and go to state 22
     SUB     shift, and go to state 23
@@ -708,7 +708,7 @@ State 47
    11     | expr . SUB expr
    12     | expr . MUL expr
    13     | expr . AFFECT expr
-   21 bexpr: expr GT expr .
+   21 bexpr: expr GT2 expr .
 
     ADD     shift, and go to state 22
     SUB     shift, and go to state 23
@@ -724,7 +724,7 @@ State 48
    11     | expr . SUB expr
    12     | expr . MUL expr
    13     | expr . AFFECT expr
-   22 bexpr: expr LT expr .
+   22 bexpr: expr LT2 expr .
 
     ADD     shift, and go to state 22
     SUB     shift, and go to state 23

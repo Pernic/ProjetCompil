@@ -835,32 +835,32 @@ YY_RULE_SETUP
 case 4:
 YY_RULE_SETUP
 #line 62 "tp.l"
-{ yylval.C = EQ; return(EQ); }
+{ yylval.C = EQ; return(EQ2); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
 #line 63 "tp.l"
-{ yylval.C = NE; return(NE); }
+{ yylval.C = NE; return(NE2); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
 #line 64 "tp.l"
-{ yylval.C = LE; return(LE); }
+{ yylval.C = LE; return(LE2); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
 #line 65 "tp.l"
-{ yylval.C = GE; return(GE); }
+{ yylval.C = GE; return(GE2); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
 #line 66 "tp.l"
-{ yylval.C = GT; return(GT); }
+{ yylval.C = GT; return(GT2); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
 #line 67 "tp.l"
-{ yylval.C = LT; return(LT); }
+{ yylval.C = LT; return(LT2); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
