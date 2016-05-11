@@ -69,28 +69,13 @@ void pprint(TreeP tree) {
   case NE:    pprintTree2(tree, " <> "); break;
   case ADD:   pprintTree2(tree, " + "); break;
   case SUB:   pprintTree2(tree, " - "); break;
-  case MUL:   pprintTree2(tree, " * "); break;
-  case RELOP:
-      if (verbose) { 
-	switch(yylval.C) {
-	case EQ: 
-	  pprintTree2(tree, " = "); break;
-	  break;
-	case NE: 
-          pprintTree2(tree, " <> "); break;
-	  break;
-	case LT: 
-          pprintTree2(tree, " < "); break;
-	  break;
-	default: 
-	  printf("Unexpected code: %d\n", yylval.C);
-	}
-      }
-      break;
   case IF:    pprintIf(tree); break;
+  case MUL:   pprintTree2(tree, "*"); break;
+  case AFFECT: pprintTree2(tree, " := "); break;
+  case RELOP:  pprintTree2(tree, " test "); break;
   default:
     /* On signale le probleme mais on ne quitte pas le programme pour autant */
-    fprintf(stderr, "Erreur! pprint : etiquette d'operator inconnue: %d\n", 
+    fprintf(stderr, "Erreur! pprint : etiquette d'operator inconnue: %d \n", 
 	    tree->op);
     setError(UNEXPECTED);
   }

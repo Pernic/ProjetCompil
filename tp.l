@@ -59,12 +59,12 @@ void lexError(char c) {
 "+"             { return(ADD); }
 "-"             { return(SUB); }
 ":="        	{ return(AFFECT); }
-"="             { yylval.C = EQ; return(RELOP); }
-"<>"            { yylval.C = NE; return(RELOP); }
-"<="            { yylval.C = LE; return(RELOP); }
-">="            { yylval.C = GE; return(RELOP); }
-">"             { yylval.C = GT; return(RELOP); }
-"<"             { yylval.C = LT; return(RELOP); }
+"="             { yylval.C = EQ; return(EQ); }
+"<>"            { yylval.C = NE; return(NE); }
+"<="            { yylval.C = LE; return(LE); }
+">="            { yylval.C = GE; return(GE); }
+">"             { yylval.C = GT; return(GT); }
+"<"             { yylval.C = LT; return(LT); }
 "*"		{ return(MUL);}
 "begin"		{ return(BEG); }
 "end"		{ return(END); }
@@ -72,7 +72,7 @@ void lexError(char c) {
 "else"		{ return(ELSE); }
 "then"		{ return(THEN); }
 {Digit}+        { yylval.I = strtol(yytext, NULL, 0); return(CST); }
-{Letter}{LD}*   { return keywordOrId(); }
+{Letter}{LD}*   { yylval.S = yytext;return keywordOrId(); }
 {Symbol}        { return(yytext[0]); }
 " "		{}
 '\n'		{}

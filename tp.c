@@ -17,7 +17,6 @@
 
 extern int yyparse();
 extern int yylineno;
-extern char *yytext;
 
 int eval(TreeP tree, VarDeclP decls);
 TreeP getChild(TreeP tree, int rank);
@@ -313,25 +312,8 @@ int eval(TreeP tree, VarDeclP decls) {
     return evalIf(tree, decls);
   case AFFECT: 
     return evalAff(tree,decls);
-  case MUL: 
+  case MUL : 
     return (eval(getChild(tree, 0), decls) * eval(getChild(tree, 1), decls));
-  case RELOP:
-      if (verbose) { 
-	switch(yylval.C) {
-	case EQ: 
-	  return (eval(getChild(tree, 0), decls) == eval(getChild(tree, 1), decls));
-	  break;
-	case NE: 
-          return (eval(getChild(tree, 0), decls) != eval(getChild(tree, 1), decls));
-	  break;
-	case LT: 
-          return (eval(getChild(tree, 0), decls) < eval(getChild(tree, 1), decls));
-	  break;
-	default: 
-	  printf("Unexpected code: %d\n", yylval.C);
-	}
-      }
-      break;
   default: 
     fprintf(stderr, "Erreur! etiquette indefinie: %d\n", tree->op);
     exit(UNEXPECTED);
