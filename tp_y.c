@@ -1234,7 +1234,7 @@ yyreduce:
     {
         case 2:
 #line 49 "tp.y" /* yacc.c:1646  */
-    {printf("Prog !!!!!!!!!!! \n");}
+    {printf("Prog !!!!!!!!!!! \n"); evalMain((yyvsp[-1].T),(yyvsp[-3].T));}
 #line 1239 "tp_y.c" /* yacc.c:1646  */
     break;
 
@@ -1330,7 +1330,7 @@ yyreduce:
 
   case 18:
 #line 99 "tp.y" /* yacc.c:1646  */
-    { (yyval.T) = makeTree((yyvsp[-1].I), 2, (yyvsp[-2].T), (yyvsp[0].T)); }
+    { (yyval.T) = makeTree(RELOP, 2, (yyvsp[-2].T), (yyvsp[0].T)); }
 #line 1335 "tp_y.c" /* yacc.c:1646  */
     break;
 
