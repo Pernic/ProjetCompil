@@ -57,13 +57,7 @@ extern int yydebug;
     MUL = 267,
     ID = 268,
     CST = 269,
-    RELOP = 270,
-    EQ = 271,
-    NE = 272,
-    LE = 273,
-    GE = 274,
-    GT = 275,
-    LT = 276
+    RELOP = 270
   };
 #endif
 
