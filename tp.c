@@ -302,10 +302,11 @@ int evalIf(TreeP tree, VarDeclP decls) {
 
 
 VarDeclP evalAff (TreeP tree, VarDeclP decls) {
+
   char *name = (char*) tree->u.str;
   
   return declVar(name, tree, decls);
-  /*return NIL(VarDecl);*/
+
 }
 
 
@@ -365,7 +366,12 @@ int eval(TreeP tree, VarDeclP decls) {
   case LT2:
     return (eval(getChild(tree, 0), decls) < eval(getChild(tree, 1), decls));
   case IF:
-   case MUL : 
+    return evalIf(getChild(tree, 0), decls);
+  case AFFECT: 
+    return evalAff(tree,decls);
+  case DECL_LIST: 
+    return evalDecls(tree);
+  case MUL : 
     return (eval(getChild(tree, 0), decls) * eval(getChild(tree, 1), decls));
   default: 
     fprintf(stderr, "Erreur! etiquette indefinie: %d\n", tree->op);
