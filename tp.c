@@ -247,20 +247,20 @@ int evalVar(TreeP tree, VarDeclP decls) {
 
 /* Evaluation d'un if then else. Attention a n'evaluer que la partie necessaire ! */
 int evalIf(TreeP tree, VarDeclP decls) {
-int resultat = 0;
+  int resultat = 0;
 
-TreeP tree_cond = getChild(tree, 0); 
-TreeP tree_vrai = getChild(tree, 1); 
+  TreeP tree_cond = getChild(tree, 0); 
+  TreeP tree_vrai = getChild(tree, 1); 
 
-if(tree->nbChildren == 2) 
-{
+  if(tree->nbChildren == 2) 
+  {
 	if(eval(tree_cond,decls))
 	{
 		return eval(tree_vrai,decls);
 	}
 	return 0;
-}else if(tree->nbChildren == 3) 
-{
+  }else if(tree->nbChildren == 3) 
+  {
 	if(eval(tree_cond,decls))
 	{
 		return eval(tree_vrai,decls);
@@ -270,13 +270,37 @@ if(tree->nbChildren == 2)
 		TreeP tree_faux = getChild(tree, 2); 
 		return eval(tree_faux,decls);
 	} 
-} 
+  } 
 }
 
 
 
 VarDeclP evalAff (TreeP tree, VarDeclP decls) {
-  return NIL(VarDecl);
+  char *name = (char*) tree->u.str;
+  int valeur = evalVar(tree,decls);
+  
+  int ispresent = 0;
+  VarDeclP res = decls;
+  
+  while(res->next != NIL(VarDeclP)){
+    if(strcmp(res->name,name))
+    {
+		ispresent = 1;
+       res->val = valeur;
+    }
+    res = res->next;
+  }
+  
+  /* la var n'existe pas */
+  if(!ispresent) 
+  {
+	  VarDeclP nouvelle_var = malloc(sizeof(VarDecl));
+	  nouvelle_var->name = name;
+	  nouvelle_var->val = valeur;
+	  res->next = nouvelle_var;
+  }
+  
+  return decls;
 }
 
 

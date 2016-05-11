@@ -67,12 +67,14 @@ void pprint(TreeP tree) {
   case CST:   printf("%d", tree->u.val); break;
   case EQ:    pprintTree2(tree, " = "); break;
   case NE:    pprintTree2(tree, " <> "); break;
+  case LT2:    pprintTree2(tree, " < "); break;
   case ADD:   pprintTree2(tree, " + "); break;
   case SUB:   pprintTree2(tree, " - "); break;
   case IF:    pprintIf(tree); break;
   case MUL:   pprintTree2(tree, "*"); break;
   case AFFECT: pprintTree2(tree, " := "); break;
   case RELOP:  pprintTree2(tree, " test "); break;
+
   default:
     /* On signale le probleme mais on ne quitte pas le programme pour autant */
     fprintf(stderr, "Erreur! pprint : etiquette d'operator inconnue: %d \n", 

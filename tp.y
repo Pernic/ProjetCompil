@@ -50,18 +50,17 @@ programme : declL BEG expr END {printf("Prog !!!!!!!!!!! \n");evalMain($3,$1);}
 ;
 
 /* Une liste eventuellement vide de declarations de variables */
-declL : decl { $$ =  makeTree(DECL_LIST, 1, $1);}
-| decl declL { $$ = makeTree(DECL_LIST, 2, $1,$2);}
-| declL declL { $$ = makeTree(DECL_LIST, 2, $1,$2);}
-| declL decl { $$ = makeTree(DECL_LIST, 2, $1,$2);}
+declL : decl { $$ = $1;}
+| decl declL { $$ = addToScope($1,$2);}
+| declL declL { $$ = addToScope($1,$2);}
+| declL decl { $$ = addToScope($1,$2);}
 ;
 
 
 /* une declaration de variable ou de fonction, terminee par un ';'. */
 decl : ID ';' { $$ = makeVar($1);}
-| ID AFFECT expr ';' { $$ = makeTree(AFFECT,2,makeLeafStr(ID, $1),$3);}
+| ID AFFECT expr ';' { $$ = evalDecls($3);}
 ;
-
 
 /* les appels ci-dessous creent un arbre de syntaxe abstraite pour l'expression
  * arithmetique. On rappelle que la methode est ascendante, donc les arbres
